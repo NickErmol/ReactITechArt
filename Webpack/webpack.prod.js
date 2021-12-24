@@ -4,7 +4,7 @@ const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = merge(common, {
   mode: "production",
@@ -23,7 +23,6 @@ module.exports = merge(common, {
       }),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "src", "template.html"),
-        title: 'Production',
         minify: {
           removeAttributeQuotes: true,
           collapseWhitespace: true,

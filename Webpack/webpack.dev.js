@@ -1,17 +1,20 @@
 const path = require("path");
 const common = require("./webpack.common");
 const { merge } = require("webpack-merge");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = merge(common, {
   mode: "development",
   output: {
     filename: "[name].bundle.js",
     path: path.resolve(__dirname, "dist"),
-    clean: true
+    clean: true,
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   devtool: 'inline-source-map',
   devServer: {
+    historyApiFallback: true,
     static: {
       directory: path.join(__dirname, 'public'),
     },
@@ -20,9 +23,9 @@ module.exports = merge(common, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src", "template.html"),
-      title: 'Development'
-    })
+      template: path.resolve(__dirname, "src", "template.html")
+    }),
+    new BundleAnalyzerPlugin()
   ],
   module: {
     rules: [
