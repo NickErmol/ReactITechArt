@@ -25,7 +25,10 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src", "template.html")
     }),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({
+      analyzerPort: 3002,
+      openAnalyzer: false,
+  })
   ],
   module: {
     rules: [
