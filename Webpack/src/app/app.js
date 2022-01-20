@@ -1,6 +1,7 @@
-import { inputsAreValid } from "./utils/inputs-are-valid";
-import { parseInputs } from "./utils/parse-inputs";
-export const run = (alertService, componentService) => {
+import inputsAreValid from './utils/inputs-are-valid';
+import parseInputs from './utils/parse-inputs';
+
+export default (alertService, componentService) => {
   alertService.hideErrors();
 
   componentService.onClick(() => {
@@ -11,7 +12,7 @@ export const run = (alertService, componentService) => {
       const [numA, numB] = parsedInputs;
       componentService.setResult(numA + numB);
     } else {
-      componentService.setResult("");
+      componentService.setResult('');
       alertService.handleAdditionError(inputs, parsedInputs);
     }
   });
