@@ -1,14 +1,14 @@
-const path = require("path");
-const common = require("./webpack.common");
-const { merge } = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const path = require('path');
+const { merge } = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const common = require('./webpack.common');
 
 module.exports = merge(common, {
-  mode: "development",
+  mode: 'development',
   output: {
-    filename: "[name].bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
     clean: true,
     assetModuleFilename: 'images/[hash][ext][query]',
   },
@@ -23,23 +23,19 @@ module.exports = merge(common, {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "src", "template.html")
+      template: path.resolve(__dirname, 'src', 'template.html'),
     }),
     new BundleAnalyzerPlugin({
       analyzerPort: 3002,
       openAnalyzer: false,
-  })
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.(scss|css)$/,
-        use: [
-          "style-loader", 
-          "css-loader", 
-          "sass-loader" 
-        ]
-      }
-    ]
-  }
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+    ],
+  },
 });

@@ -1,19 +1,19 @@
-const path = require("path");
-const common = require("./webpack.common");
-const { merge } = require("webpack-merge");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const { merge } = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const common = require('./webpack.common');
 
 module.exports = merge(common, {
-  mode: "production",
+  mode: 'production',
   devtool: 'source-map',
   output: {
-    filename: "[name].[contenthash].bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: '[name].[contenthash].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'images/[hash][ext][query]',
-    clean: true
+    clean: true,
   },
   optimization: {
     minimizer: [
@@ -22,31 +22,27 @@ module.exports = merge(common, {
         extractComments: false,
       }),
       new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, "src", "template.html"),
+        template: path.resolve(__dirname, 'src', 'template.html'),
         minify: {
           removeAttributeQuotes: true,
           collapseWhitespace: true,
-          removeComments: true
-        }
+          removeComments: true,
+        },
       }),
-    ]
+    ],
   },
   plugins: [
-    new MiniCssExtractPlugin({ 
-      filename: "[name].[contenthash].css",
-      chunkFilename: "[id].[contenthash].css",
-   })
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
+    }),
   ],
   module: {
     rules: [
       {
         test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "sass-loader"
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
       },
-    ]
-  }
+    ],
+  },
 });

@@ -1,3 +1,1 @@
-export const parseInputs = (...input) => {
-  return input.map(str => parseInt(str));
-};
+export default (...input) => input.map(str => parseInt(str, 10));
