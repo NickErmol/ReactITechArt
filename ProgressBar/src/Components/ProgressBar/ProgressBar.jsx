@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
-import s from './ProgressBar.module.css';
+import PropTypes from 'prop-types';
+import style from './ProgressBar.module.css';
 
 function ProgressBar(props) {
   const { value } = props;
@@ -9,12 +9,15 @@ function ProgressBar(props) {
   };
 
   return (
-    <div className={s.container}>
-      <div className={s.filler} style={fillerStyle}>
-        <span className={s.label}>{`${value}%`}</span>
+    <div className={style.container}>
+      <div className={style.filler} style={fillerStyle}>
+        <span className={style.label}>{`${value}%`}</span>
       </div>
     </div>
   );
 }
 
+ProgressBar.propTypes = {
+  value: PropTypes.string.isRequired,
+};
 export default ProgressBar;

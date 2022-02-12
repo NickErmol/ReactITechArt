@@ -19,12 +19,17 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['react', 'prettier'],
-  rules: {
-    semi: ['error', 'always'],
-    quotes: ['error', 'single'],
-    'no-eval': ['error', { allowIndirect: true }],
-    'react/jsx-uses-vars': 'error',
-    'no-console': 'error',
-  },
-  ignorePatterns: ['dist/*'],
+  overrides: [
+    {
+      files: ['*.js', '*.jsx'],
+      rules: {
+        semi: ['error', 'always'],
+        quotes: ['error', 'single'],
+        'no-eval': ['error', { allowIndirect: true }],
+        'react/jsx-uses-vars': 'error',
+        'no-console': 'error',
+      },
+    },
+  ],
+  ignorePatterns: ['dist/*', 'node_modules/*'],
 };
