@@ -1,26 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 export default function VisiblePosts({ allPosts, query }) {
-  const filterPosts = (posts, searchQuery) => {
-    if (!searchQuery) {
-      return posts;
+  const posts = useMemo(() => {
+    let filteredPosts = allPosts;
+    if (query) {
+      filteredPosts = allPosts.filter(post => {
+        const postName = post.name.toLowerCase();
+        return postName.includes(query);
+      });
     }
-
-    return posts.filter(post => {
-      const postName = post.name.toLowerCase();
-      return postName.includes(searchQuery);
-    });
-  };
-  const filteredPosts = filterPosts(allPosts, query);
+    return filteredPosts.map(post => <li key={post.id}>{post.name}</li>);
+  }, [allPosts, query]);
 
   return (
     <div>
-      <ul>
-        {filteredPosts.map(post => (
-          <li key={post.id}>{post.name}</li>
-        ))}
-      </ul>
+      <ul>{posts}</ul>
     </div>
   );
 }

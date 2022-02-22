@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import PropTypes from 'prop-types';
 import SearchInput from './SearchInput';
@@ -23,7 +24,7 @@ export default function SearchBar({ setQuery, mode }) {
   };
 
   const switchMode = modeOption => {
-    switch (modeOption.selectedOption) {
+    switch (modeOption) {
       case 'afterEnter':
         return (
           <SearchInput
@@ -56,7 +57,5 @@ export default function SearchBar({ setQuery, mode }) {
 
 SearchBar.propTypes = {
   setQuery: PropTypes.func.isRequired,
-  mode: PropTypes.shape({
-    selectedOption: PropTypes.string.isRequired,
-  }).isRequired,
+  mode: PropTypes.string.isRequired,
 };

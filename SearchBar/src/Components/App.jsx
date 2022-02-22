@@ -5,11 +5,8 @@ import style from './App.module.css';
 import VisiblePosts from './SearchBar/VisiblePosts';
 
 function App() {
-  const SearchInputMode = {
-    selectedOption: 'immediate',
-  };
   const [query, setQuery] = useState('');
-  const [mode, setMode] = useState(SearchInputMode);
+  const [mode, setMode] = useState('immediate');
   const posts = [
     { id: '1', name: 'This first post' },
     { id: '2', name: 'This next post' },

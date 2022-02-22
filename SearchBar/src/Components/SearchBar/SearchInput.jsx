@@ -9,9 +9,7 @@ export default function SearchInput({
   placeholder,
 }) {
   const handler =
-    mode.selectedOption === 'afterEnter'
-      ? { onKeyPress }
-      : { onChange: onSearch };
+    mode === 'afterEnter' ? { onKeyPress } : { onChange: onSearch };
   return (
     <div>
       <input placeholder={placeholder} {...handler} />
@@ -23,7 +21,5 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onKeyPress: PropTypes.func,
   onSearch: PropTypes.func,
-  mode: PropTypes.shape({
-    selectedOption: PropTypes.string.isRequired,
-  }).isRequired,
+  mode: PropTypes.string.isRequired,
 };
