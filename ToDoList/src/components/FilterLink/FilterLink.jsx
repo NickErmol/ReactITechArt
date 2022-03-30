@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { changeFilterStatus, StatusFilters } from '../../slicers/filterSlice';
 import style from './FilterLink.module.css';
-import { StatusFilters } from '../../features/filterSlice';
 
-function FilterLink({ value, status, onChange }) {
+function FilterLink({ value, selectedStatus }) {
+  const dispatch = useDispatch();
   const key = StatusFilters[value];
-  const handleClick = () => onChange(key);
-  const className = key === status ? style.selected : '';
+  const handleClick = useCallback(
+    () => dispatch(changeFilterStatus(key)),
+    [key, dispatch],
+  );
+  const className = useMemo(
+    () => (key === selectedStatus ? style.selected : ''),
+    [key, selectedStatus],
+  );
 
   return (
     <button type="button" className={className} onClick={handleClick}>
@@ -17,8 +25,7 @@ function FilterLink({ value, status, onChange }) {
 
 FilterLink.propTypes = {
   value: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  selectedStatus: PropTypes.string.isRequired,
 };
 
 export default FilterLink;

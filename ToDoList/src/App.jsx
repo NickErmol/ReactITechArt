@@ -1,20 +1,12 @@
-/* eslint-disable no-console */
-/* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import style from './App.module.css';
-import {
-  StatusFilters,
-  changeFilterStatus,
-  selectStatus,
-} from './features/filterSlice';
+import { StatusFilters } from './slicers/filterSlice';
+import selectStatus from './selectors/filterSelectors';
 import ToDoItem from './components/ToDoItem/ToDoItem';
-import {
-  selectFilteredTodos,
-  AddToDo,
-  selectLastToDoId,
-} from './features/toDoSlice';
+import { AddToDo } from './slicers/toDoSlice';
+import { selectFilteredTodos } from './selectors/toDoSelectors';
 import FilterLink from './components/FilterLink/FilterLink';
 
 function App() {
@@ -27,48 +19,54 @@ function App() {
   const dispatch = useDispatch();
   const filteredToDoList = useSelector(selectFilteredTodos);
   const status = useSelector(selectStatus);
-  const onStatusChange = newStatus => dispatch(changeFilterStatus(newStatus));
-  const lastId = useSelector(selectLastToDoId);
 
-  const addToDo = (input, id) => {
-    dispatch(AddToDo(input, id));
+  const addToDo = input => {
+    dispatch(AddToDo(input));
   };
 
   const handleRegistration = data => {
     resetField('toDoValue');
-    addToDo(data.toDoValue, lastId);
+    addToDo(data.toDoValue);
   };
 
+  const filteredToDo = useMemo(
+    () =>
+      filteredToDoList.map(item => (
+        <ToDoItem
+          key={item.id}
+          name={item.item}
+          done={item.done}
+          id={item.id}
+        />
+      )),
+    [filteredToDoList],
+  );
+
+  const statusFilters = useMemo(
+    () =>
+      Object.keys(StatusFilters).map(key => (
+        <FilterLink key={key} value={key} selectedStatus={status} />
+      )),
+    [status],
+  );
+
   return (
-    <form className={style.app} onSubmit={handleSubmit(handleRegistration)}>
+    <div className={style.app}>
       <div className={style.app__container}>
-        <div className={style.app__toDoContainer}>
-          {filteredToDoList.map(item => (
-            <ToDoItem
-              key={item.id}
-              name={item.item}
-              done={item.done}
-              id={item.id}
-            />
-          ))}
-        </div>
-        <div className={style.input}>
+        <div className={style.app__toDoContainer}>{filteredToDo}</div>
+        <span className={style.error}>
+          {errors.toDoValue?.type === 'required' && 'ToDo text is required'}
+        </span>
+        <form
+          className={style.app__form}
+          onSubmit={handleSubmit(handleRegistration)}
+        >
           <input type="text" {...register('toDoValue', { required: true })} />
-          {errors.toDoValue?.type === 'required' && 'ToDoText is required'}
           <button type="submit">Add</button>
-        </div>
+        </form>
       </div>
-      <div className={style.app__filterContainer}>
-        {Object.keys(StatusFilters).map(key => (
-          <FilterLink
-            key={key}
-            value={key}
-            status={status}
-            onChange={onStatusChange}
-          />
-        ))}
-      </div>
-    </form>
+      <div className={style.app__filterContainer}>{statusFilters}</div>
+    </div>
   );
 }
 

@@ -28,6 +28,8 @@ module.exports = {
         'no-eval': ['error', { allowIndirect: true }],
         'react/jsx-uses-vars': 'error',
         'no-console': 'error',
+        'react/jsx-props-no-spreading': 'off',
+        'no-param-reassign': ['error', { props: false }],
       },
     },
   ],
