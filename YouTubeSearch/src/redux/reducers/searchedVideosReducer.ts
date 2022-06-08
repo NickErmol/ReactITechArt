@@ -1,34 +1,33 @@
 import {
-  SELECTED_VIDEO_FAIL,
-  SELECTED_VIDEO_REQUEST,
-  SELECTED_VIDEO_SUCCESS,
+  SEARCHED_VIDEO_FAIL,
+  SEARCHED_VIDEO_REQUEST,
+  SEARCHED_VIDEO_SUCCESS,
 } from '../actionType';
 
-const selectedVideoReducer = (
+const searchedVideosReducer = (
   state = {
     loading: true,
-    video: null,
+    videos: [],
   },
-  action,
+  action: any,
 ) => {
   const { payload, type } = action;
 
   switch (type) {
-    case SELECTED_VIDEO_REQUEST:
+    case SEARCHED_VIDEO_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case SELECTED_VIDEO_SUCCESS:
+    case SEARCHED_VIDEO_SUCCESS:
       return {
         ...state,
-        video: payload,
+        videos: payload,
         loading: false,
       };
-    case SELECTED_VIDEO_FAIL:
+    case SEARCHED_VIDEO_FAIL:
       return {
         ...state,
-        video: null,
         loading: false,
         error: payload,
       };
@@ -38,4 +37,4 @@ const selectedVideoReducer = (
   }
 };
 
-export default selectedVideoReducer;
+export default searchedVideosReducer;

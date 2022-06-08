@@ -1,0 +1,22 @@
+{
+    "extends": "@tsconfig/node16/tsconfig.json",
+    "compilerOptions": {
+      "lib":[
+        "dom",
+        "es2021"
+      ],
+      "jsx": "react",
+      "target": "es2021",
+      "allowSyntheticDefaultImports": true,
+      "preserveConstEnums": true,
+      "noImplicitAny": true,
+      "noEmitOnError":false,
+      "strictNullChecks": true,
+      "allowJs": true,
+      "outDir": "./dist/",
+      "module": "es6",
+      "moduleResolution": "node"
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+}

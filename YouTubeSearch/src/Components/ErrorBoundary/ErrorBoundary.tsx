@@ -1,8 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+interface Props {
+  children?: ReactNode
+}
+
+interface State {
+  hasError: boolean | null
+}
+
+class ErrorBoundary extends Component<Props, State> {
+  constructor( props: Props) {
     super(props);
     this.state = { hasError: false };
   }
@@ -26,12 +33,5 @@ class ErrorBoundary extends React.Component {
     return children;
   }
 }
-
-ErrorBoundary.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.element,
-  ]).isRequired,
-};
 
 export default ErrorBoundary;

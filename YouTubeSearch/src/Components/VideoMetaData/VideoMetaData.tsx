@@ -1,9 +1,22 @@
-import React from 'react';
-import moment from 'moment';
+import React, { useEffect } from 'react';
 import ShowMoreText from 'react-show-more-text';
-import PropTypes from 'prop-types';
+import transformPublishedAtTime from '../../utils/transformPublishedAtTime';
 
-const VideoMetaData = ({ video: { snippet, statistics } }) => {
+interface Props {
+  video:{
+    snippet: {
+            title: string,
+            publishedAt: string,
+            description: string,
+          },
+    statistics: {
+      viewCount: string,
+      likeCount: string,
+    }
+  }
+}
+
+const VideoMetaData: React.FC<Props> = ({ video: { snippet, statistics } }) => {
   const { title, publishedAt, description } = snippet;
   const { viewCount, likeCount } = statistics;
 
@@ -14,7 +27,7 @@ const VideoMetaData = ({ video: { snippet, statistics } }) => {
         <div>
           <span>
             <span>{viewCount} - Views </span>
-            <span> || Published - {moment(publishedAt).fromNow()}</span>
+            <span> || Published - {transformPublishedAtTime(publishedAt)}</span>
           </span>
           <div>
             <span>likes - {likeCount}</span>
@@ -37,17 +50,3 @@ const VideoMetaData = ({ video: { snippet, statistics } }) => {
 };
 
 export default VideoMetaData;
-
-VideoMetaData.propTypes = {
-  video: PropTypes.shape({
-    snippet: PropTypes.shape({
-      title: PropTypes.string,
-      publishedAt: PropTypes.string,
-      description: PropTypes.string,
-    }),
-    statistics: PropTypes.shape({
-      viewCount: PropTypes.string,
-      likeCount: PropTypes.string,
-    }),
-  }).isRequired,
-};

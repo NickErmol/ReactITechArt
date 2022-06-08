@@ -7,10 +7,10 @@ const Header = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = e => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    navigate(`/search/${input}`);
+    if (e.target[0].value) navigate(`/search/${input}`);
   };
 
   return (

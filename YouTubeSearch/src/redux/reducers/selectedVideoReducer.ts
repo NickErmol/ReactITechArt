@@ -1,33 +1,34 @@
 import {
-  RELATED_VIDEO_FAIL,
-  RELATED_VIDEO_REQUEST,
-  RELATED_VIDEO_SUCCESS,
+  SELECTED_VIDEO_FAIL,
+  SELECTED_VIDEO_REQUEST,
+  SELECTED_VIDEO_SUCCESS,
 } from '../actionType';
 
-const relatedVideoReducer = (
+const selectedVideoReducer = (
   state = {
     loading: true,
-    videos: [],
+    video: null,
   },
-  action,
+  action: any,
 ) => {
   const { payload, type } = action;
 
   switch (type) {
-    case RELATED_VIDEO_REQUEST:
+    case SELECTED_VIDEO_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case RELATED_VIDEO_SUCCESS:
+    case SELECTED_VIDEO_SUCCESS:
       return {
         ...state,
-        videos: payload,
+        video: payload,
         loading: false,
       };
-    case RELATED_VIDEO_FAIL:
+    case SELECTED_VIDEO_FAIL:
       return {
         ...state,
+        video: null,
         loading: false,
         error: payload,
       };
@@ -37,4 +38,4 @@ const relatedVideoReducer = (
   }
 };
 
-export default relatedVideoReducer;
+export default selectedVideoReducer;

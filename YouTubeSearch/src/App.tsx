@@ -6,12 +6,12 @@ import SearchPage from './Pages/SearchPage/SearchPage';
 import Header from './Components/Header/Header';
 import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <Header />
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/search/:query" element={<SearchPage />} />
         <Route path="/watch/:id" element={<WatchPage />} />
         <Route

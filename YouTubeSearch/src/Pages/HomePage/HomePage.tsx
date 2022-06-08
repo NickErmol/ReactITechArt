@@ -1,22 +1,28 @@
-import React, { useEffect } from 'react';
+/* eslint-disable no-console */
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import style from './HomePage.module.css';
 import Video from '../../Components/Video/Video';
-import { HOME_VIDEOS_REQUEST } from '../../redux/actionType';
+import { homeVideo } from '../../redux/actions';
+import { getHomeVideos, getIsHomeVideosLoading } from '../../redux/selectors';
+
+import style from './HomePage.module.css';
 
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  const { videos, loading } = useSelector(state => state.homeVideos);
-
+  const videos = useSelector(getHomeVideos);
+  const loading = useSelector(getIsHomeVideosLoading);
+  console.log(videos);
   useEffect(() => {
-    dispatch({ type: HOME_VIDEOS_REQUEST });
+    dispatch(homeVideo());
   }, [dispatch]);
 
   const fetchData = () => {
-    dispatch({ type: HOME_VIDEOS_REQUEST });
+    dispatch(homeVideo());
   };
+
+  const memoizedVideos = useMemo(() => videos.map((video: any) => <Video video={video} key={video.id} />), [videos]);
 
   return (
     <div>
@@ -28,7 +34,7 @@ const HomePage = () => {
         className={style.container}
       >
         {!loading ? (
-          videos.map(video => <Video video={video} key={video.id} />)
+          memoizedVideos
         ) : (
           <p>Loading...</p>
         )}

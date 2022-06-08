@@ -10,7 +10,7 @@ const homeVideosReducer = (
     loading: false,
     nextPageToken: null,
   },
-  action,
+  action: any,
 ) => {
   const { type, payload } = action;
 

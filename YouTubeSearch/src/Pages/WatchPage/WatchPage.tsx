@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Video from '../../Components/Video/Video';
 import VideoMetaData from '../../Components/VideoMetaData/VideoMetaData';
+import { relatedVideo, selectedVideo } from '../../redux/actions';
 import {
-  SELECTED_VIDEO_REQUEST,
-  RELATED_VIDEO_REQUEST,
-} from '../../redux/actionType';
+  getRelatedVideos,
+  getSelectedVideo,
+  getIsSelectedVideosLoading,
+} from '../../redux/selectors';
+
 import style from './WatchPage.module.css';
 
 const WatchPage = () => {
@@ -14,13 +17,20 @@ const WatchPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: SELECTED_VIDEO_REQUEST, payload: id });
-    dispatch({ type: RELATED_VIDEO_REQUEST, payload: id });
+    dispatch(selectedVideo(id));
+    dispatch(relatedVideo(id));
   }, [dispatch, id]);
 
-  const { videos } = useSelector(state => state.relatedVideos);
+  const videos = useSelector(getRelatedVideos);
 
-  const { video, loading } = useSelector(state => state.selectedVideo);
+  const video = useSelector(getSelectedVideo);
+  const loading = useSelector(getIsSelectedVideosLoading);
+
+  const memoizedVideos = useMemo(() => videos
+  ?.filter((filteredVideo: any) => filteredVideo.snippet)
+  .map((videoItem: any) => (
+    <Video video={videoItem} key={videoItem.id.videoId} />
+  )), [videos]);
 
   return (
     <div className={style.container}>
@@ -39,11 +49,7 @@ const WatchPage = () => {
       </div>
       <div className={style.videoList}>
         {!loading ? (
-          videos
-            ?.filter(videoItem => videoItem.snippet)
-            .map(videoItem => (
-              <Video video={videoItem} key={videoItem.id.videoId} />
-            ))
+         memoizedVideos
         ) : (
           <h6>Loading...</h6>
         )}

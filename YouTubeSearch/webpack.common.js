@@ -1,6 +1,8 @@
+const Dotenv = require('dotenv-webpack');
+
 module.exports = {
   entry: {
-    main: './src/index.jsx',
+    main: './src/index.tsx',
   },
   module: {
     rules: [
@@ -17,12 +19,18 @@ module.exports = {
         type: 'asset/resource',
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
     ],
   },
+  plugins: [new Dotenv()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.css', '.scss'],
     modules: ['src', 'node_modules'],

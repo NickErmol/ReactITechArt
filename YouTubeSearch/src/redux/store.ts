@@ -7,7 +7,7 @@ import homeVideosReducer from './reducers/homeVideoReducer';
 import relatedVideoReducer from './reducers/relatedVideoReducer';
 import searchedVideosReducer from './reducers/searchedVideosReducer';
 import selectedVideoReducer from './reducers/selectedVideoReducer';
-import rootSaga from './saga/sagas';
+import rootSaga from './saga/rootSaga';
 
 const rootReducer = combineReducers({
   homeVideos: homeVideosReducer,
