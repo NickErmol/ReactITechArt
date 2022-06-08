@@ -1,0 +1,13 @@
+.video {
+  display: flex;
+  margin: 0.3rem;
+  flex-direction: column;
+  width: 20rem;
+  background-color: rgb(232, 248, 217);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.description{
+  padding-left: 0.2rem;
+}

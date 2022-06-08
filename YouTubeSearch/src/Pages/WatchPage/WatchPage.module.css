@@ -1,0 +1,17 @@
+.container{
+    display: flex;
+    margin-left: 7rem;
+}
+
+.player{
+    height: 30rem;
+    margin-top: 0.3rem;
+}
+
+.playerContainer{
+    padding-right: 1rem;
+}
+
+.videoList{
+    margin-right: 1rem;
+}
